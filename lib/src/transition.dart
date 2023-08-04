@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 enum DialogTransitionType {
-  Shrink,
-  Bubble,
-  LeftToRight,
-  RightToLeft,
-  TopToBottom,
-  BottomToTop,
-  NONE
+  shrink,
+  bubble,
+  leftToRight,
+  rightToLeft,
+  topToBottom,
+  bottomToTop,
+  none
 }
 
 class DialogTransition {
   static Widget transitionFromLeft(Animation<double> animation, Widget child) {
     return SlideTransition(
-      position: Tween<Offset>(begin: Offset(-1.0, 0.0), end: Offset.zero)
+      position: Tween<Offset>(begin: const Offset(-1.0, 0.0), end: Offset.zero)
           .animate(animation),
       child: child,
     );
@@ -21,7 +21,7 @@ class DialogTransition {
 
   static Widget transitionFromRight(Animation<double> animation, Widget child) {
     return SlideTransition(
-      position: Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset.zero)
+      position: Tween<Offset>(begin: const Offset(1.0, 0.0), end: Offset.zero)
           .animate(animation),
       child: child,
     );
@@ -29,7 +29,7 @@ class DialogTransition {
 
   static Widget transitionFromTop(Animation<double> animation, Widget child) {
     return SlideTransition(
-      position: Tween<Offset>(begin: Offset(0.0, -1.0), end: Offset.zero)
+      position: Tween<Offset>(begin: const Offset(0.0, -1.0), end: Offset.zero)
           .animate(animation),
       child: child,
     );
@@ -38,7 +38,7 @@ class DialogTransition {
   static Widget transitionFromBottom(
       Animation<double> animation, Widget child) {
     return SlideTransition(
-      position: Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero)
+      position: Tween<Offset>(begin: const Offset(0.0, 1.0), end: Offset.zero)
           .animate(animation),
       child: child,
     );

@@ -3,7 +3,7 @@
 ///==================================================================================
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ars_dialog/ars_dialog.dart';
+import 'package:d_dialog/d_dialog.dart';
 
 ///Extension of Dialog
 extension DialogShow on Dialog {

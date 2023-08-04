@@ -1,16 +1,15 @@
-import 'package:ars_dialog/ars_dialog.dart';
-import 'package:ars_dialog/src/transition.dart';
-import 'package:ars_dialog/src/utils.dart';
+import 'package:d_dialog/d_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 ///Typedef of Progress while on Progress Error
-typedef OnProgressError(dynamic error);
+typedef OnProgressError = Function(dynamic error);
 
 ///Typedef of Progress while on Progress Finish
-typedef OnProgressFinish<T>(T data);
+typedef OnProgressFinish<T> = Function(T data);
 
 ///Typedef of Progress while on Progress Cancel
-typedef OnProgressCancel();
+typedef OnProgressCancel = Function();
 
 abstract class _ProgressDialog {
   ///You can set title of dialog using this function,
@@ -199,14 +198,14 @@ class ProgressDialog implements _ProgressDialog {
       blur: blur,
       defaultLoadingWidget: progressWidget,
       cancelText: cancelText,
-      onCancel: onProgressCancel != null ? onProgressCancel : null,
+      onCancel: onProgressCancel,
       dialogTransitionType: dialogTransitionType,
       transitionDuration: transitionDuration,
     );
 
     pDialog.show(useSafeArea: useSafeArea);
 
-    var output;
+    dynamic output;
     await future.then((data) {
       if (onProgressFinish != null) onProgressFinish = onProgressFinish!(data);
       output = data;
@@ -248,10 +247,7 @@ class _ProgressDialogWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ProgressDialogWidgetState createState() {
-    _dialogWidgetState = _ProgressDialogWidgetState();
-    return _dialogWidgetState;
-  }
+  _ProgressDialogWidgetState createState() => _ProgressDialogWidgetState();
 
   _ProgressDialogWidgetState getDialogState() {
     _dialogWidgetState = _ProgressDialogWidgetState();
@@ -274,23 +270,22 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
     Color? backgroundColor = _backgroundColor ?? widget.backgroundColor;
     Widget loading = (_loading ?? widget.loadingWidget) ??
         Container(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           height: 50.0,
           width: 50.0,
-          child: CircularProgressIndicator(
+          child: const CircularProgressIndicator(
             strokeWidth: 3,
           ),
         );
 
     EdgeInsetsGeometry? msgPadding = title == null
-        ? EdgeInsets.all(15.0)
+        ? const EdgeInsets.all(15.0)
         : widget.onCancel == null
-            ? widget.dialogStyle.contentPadding == null
-                ? EdgeInsets.fromLTRB(15.0, 0, 15.0, 15.0)
-                : widget.dialogStyle.contentPadding
-            : EdgeInsets.fromLTRB(15.0, 0, 15.0, 0);
+            ? widget.dialogStyle.contentPadding ??
+                const EdgeInsets.fromLTRB(15.0, 0, 15.0, 15.0)
+            : const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0);
 
-    return ArsAlertDialog(
+    return DAlertDialog(
       title: title,
       dismissable: widget.dismissable ?? true,
       blur: widget.blur,
@@ -307,14 +302,14 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
           borderRadius:
               widget.dialogStyle.borderRadius ?? BorderRadius.circular(2.0),
           contentPadding: msgPadding as EdgeInsets? ??
-              EdgeInsets.symmetric(horizontal: 20.0),
+              const EdgeInsets.symmetric(horizontal: 20.0),
           contentTextStyle: widget.dialogStyle.contentTextStyle,
           elevation: widget.dialogStyle.elevation,
           semanticsLabel: widget.dialogStyle.semanticsLabel,
           // animatePopup: widget.dialogStyle.animatePopup ?? true,
           shape: widget.dialogStyle.shape,
           titlePadding: widget.dialogStyle.titlePadding ??
-              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
+              const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
           titleTextStyle: widget.dialogStyle.titleTextStyle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -324,15 +319,15 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               loading,
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
                 child: DefaultTextStyle(
-                  child: Semantics(child: message),
                   style: widget.dialogStyle.contentTextStyle ??
                       dialogTheme.contentTextStyle ??
-                      theme.textTheme.subtitle1!,
+                      theme.textTheme.titleMedium!,
+                  child: Semantics(child: message),
                 ),
               ),
             ],
@@ -348,7 +343,7 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
                 child: TextButton(
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                      EdgeInsets.only(),
+                      const EdgeInsets.only(),
                     ),
                     overlayColor: MaterialStateProperty.all<Color>(
                       Colors.white.withOpacity(.3),
@@ -359,8 +354,9 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
                     Navigator.pop(context);
                   },
                   child: DefaultTextStyle(
-                    child: widget.cancelText ?? Text("Cancel"),
-                    style: TextStyle(color: Theme.of(context).accentColor),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary),
+                    child: widget.cancelText ?? const Text('Cancel'),
                   ),
                 ),
               )
@@ -370,25 +366,25 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
 
   @override
   void setTitle(Widget title) async {
-    this._title = title;
+    _title = title;
     if (mounted) setState(() {});
   }
 
   @override
   void setMessage(Widget message) async {
-    this._message = message;
+    _message = message;
     if (mounted) setState(() {});
   }
 
   @override
   void setLoadingWidget(Widget loading) async {
-    this._loading = loading;
+    _loading = loading;
     if (mounted) setState(() {});
   }
 
   @override
   void setBackgroundColor(Color color) async {
-    this._backgroundColor = color;
+    _backgroundColor = color;
     if (mounted) setState(() {});
   }
 }
@@ -462,7 +458,9 @@ class CustomProgressDialog implements _CustomProgressDialog {
 
   ///Dismiss the dialog
   void dismiss() {
-    print(_show);
+    if (kDebugMode) {
+      print(_show);
+    }
     if (_show) {
       _show = false;
       Navigator.pop(context);
@@ -504,23 +502,27 @@ class CustomProgressDialog implements _CustomProgressDialog {
       backgroundColor: backgroundColor,
       blur: blur,
       onDismiss: onDismiss,
-      onCancel: onProgressCancel != null ? onProgressCancel : null,
+      onCancel: onProgressCancel,
       dialogTransitionType: dialogTransitionType,
       transitionDuration: transitionDuration,
     );
 
     pDialog.show(useSafeArea: useSafeArea);
 
-    var output;
+    dynamic output;
     try {
       await future.then((data) {
-        if (onProgressFinish != null)
+        if (onProgressFinish != null) {
           onProgressFinish = onProgressFinish!(data);
+        }
         output = data;
       }).catchError((error) {
         if (onProgressError != null) onProgressError = onProgressError!(error);
       });
-    } catch (e) {}
+    } catch (e) {
+      pDialog.dismiss();
+      rethrow;
+    }
     pDialog.dismiss();
 
     return output;
@@ -549,10 +551,8 @@ class _CustomProgressDialogWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomProgressDialogWidgetState createState() {
-    _dialogWidgetState = _CustomProgressDialogWidgetState();
-    return _dialogWidgetState;
-  }
+  _CustomProgressDialogWidgetState createState() =>
+      _CustomProgressDialogWidgetState();
 
   _CustomProgressDialogWidgetState getDialogState() {
     _dialogWidgetState = _CustomProgressDialogWidgetState();
@@ -570,9 +570,9 @@ class _CustomProgressDialogWidgetState
   Widget build(BuildContext context) {
     Color backgroundColor = _backgroundColor ??
         (widget.backgroundColor ?? Colors.black.withOpacity(.5));
-    Widget loadingWidget = (this._loadingWidget ?? widget.loadingWidget) ??
+    Widget loadingWidget = (_loadingWidget ?? widget.loadingWidget) ??
         Container(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           height: 100.0,
           width: 100.0,
           alignment: Alignment.center,
@@ -580,7 +580,7 @@ class _CustomProgressDialogWidgetState
             borderRadius: BorderRadius.circular(20),
             color: Colors.white,
           ),
-          child: CircularProgressIndicator(),
+          child: const CircularProgressIndicator(),
         );
 
     return DialogBackground(
@@ -600,13 +600,13 @@ class _CustomProgressDialogWidgetState
 
   @override
   void setLoadingWidget(Widget loadingWidget) async {
-    this._loadingWidget = loadingWidget;
+    _loadingWidget = loadingWidget;
     if (mounted) setState(() {});
   }
 
   @override
   void setBackgroundColor(Color color) async {
-    this._backgroundColor = color;
+    _backgroundColor = color;
     if (mounted) setState(() {});
   }
 }

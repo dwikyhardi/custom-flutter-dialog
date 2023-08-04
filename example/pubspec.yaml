@@ -1,8 +1,8 @@
 name: example
-description: Example for ars_dialog
+description: Example for d_dialog
 version: 1.0.0+1
-homepage: https://github.com/arsamme
-author: Ali Raghebi <aliraghebiii@gmail.com>
+homepage: https://github.com/dwikyhardi/custom-flutter-dialog
+publish_to: none
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  ars_dialog:
+  d_dialog:
     path: ".."
 
 flutter:

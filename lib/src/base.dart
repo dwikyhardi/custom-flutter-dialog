@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:ars_dialog/src/transition.dart';
-import 'package:ars_dialog/src/utils.dart';
-import 'package:ars_dialog/src/zoom_widget/zoom_widget.dart';
+import 'package:d_dialog/src/transition.dart';
+import 'package:d_dialog/src/utils.dart';
+import 'package:d_dialog/src/zoom_widget/zoom_widget.dart';
 import 'package:flutter/material.dart';
 
-/// ArsDialogs widget
-class ArsDialog extends StatelessWidget {
+/// DDialog widget
+class DDialog extends StatelessWidget {
   ///Dialog style
   final DialogStyle? dialogStyle;
 
@@ -20,7 +20,7 @@ class ArsDialog extends StatelessWidget {
   ///The (optional) set of actions that are displayed at the bottom of the dialog.
   final List<Widget>? actions;
 
-  const ArsDialog(
+  const DDialog(
       {Key? key, this.dialogStyle, this.title, this.content, this.actions})
       : super(key: key);
 
@@ -39,26 +39,26 @@ class ArsDialog extends StatelessWidget {
           title != null
               ? Padding(
                   padding: style.titlePadding ??
-                      EdgeInsets.only(left: 15.0, right: 15.0, top: 10.0),
+                      const EdgeInsets.only(left: 15.0, right: 15.0, top: 10.0),
                   child: DefaultTextStyle(
+                    style: style.titleTextStyle ??
+                        dialogTheme.titleTextStyle ??
+                        theme.textTheme.titleLarge!,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         Semantics(
-                          child: title,
                           namesRoute: true,
                           label: label,
+                          child: title,
                         ),
                         style.titleDivider ?? false
-                            ? Divider()
+                            ? const Divider()
                             : Container(
                                 height: 10.0,
                               )
                       ],
                     ),
-                    style: style.titleTextStyle ??
-                        dialogTheme.titleTextStyle ??
-                        theme.textTheme.headline6!,
                   ),
                 )
               : Container(),
@@ -66,13 +66,13 @@ class ArsDialog extends StatelessWidget {
               ? Flexible(
                   child: Padding(
                     padding: style.contentPadding ??
-                        EdgeInsets.only(
+                        const EdgeInsets.only(
                             right: 15.0, left: 15.0, top: 0.0, bottom: 15.0),
                     child: DefaultTextStyle(
-                      child: Semantics(child: content),
                       style: style.contentTextStyle ??
                           dialogTheme.contentTextStyle ??
-                          theme.textTheme.subtitle1!,
+                          theme.textTheme.titleMedium!,
+                      child: Semantics(child: content),
                     ),
                   ),
                 )
@@ -113,7 +113,7 @@ class ArsDialog extends StatelessWidget {
                           ),
                         ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
         ],
       ),
     );
@@ -125,7 +125,6 @@ class ArsDialog extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 280.0),
           child: Card(
-            child: dialogChild,
             clipBehavior: Clip.antiAlias,
             elevation: style.elevation ?? 24,
             color: style.backgroundColor,
@@ -134,6 +133,7 @@ class ArsDialog extends StatelessWidget {
                 : style.shape ??
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0)),
+            child: dialogChild,
           ),
         ),
       ),
@@ -154,7 +154,7 @@ class ArsDialog extends StatelessWidget {
 }
 
 ///Simple dialog with blur background and popup animations, use DialogStyle to custom it
-class ArsAlertDialog extends DialogBackground {
+class DAlertDialog extends DialogBackground {
   ///Dialog style
   final DialogStyle? dialogStyle;
 
@@ -167,36 +167,30 @@ class ArsAlertDialog extends DialogBackground {
   ///The (optional) set of actions that are displayed at the bottom of the dialog.
   final List<Widget>? actions;
 
-  /// Creates an background filter that applies a Gaussian blur.
-  /// Default = 0
-  final double? blur;
-
-  ///Is your dialog dismissable?, because its warp by BlurDialogBackground,
-  ///you have to declare here instead on showDialog
-  final bool? dismissable;
-
   ///Its Barrier Color
   final Color? backgroundColor;
 
-  ///Action before dialog dismissed
-  final Function? onDismiss;
-
-  const ArsAlertDialog({
+  const DAlertDialog({
     Key? key,
     this.backgroundColor,
     this.dialogStyle,
     this.title,
     this.content,
     this.actions,
-    this.blur,
-    this.dismissable,
-    this.onDismiss,
-  }) : super(key: key);
+    double? blur,
+    bool? dismissable,
+    Function? onDismiss,
+  }) : super(
+          key: key,
+          onDismiss: onDismiss,
+          dismissable: dismissable,
+          blur: blur,
+        );
 
   @override
   Widget build(BuildContext context) {
     return DialogBackground(
-      dialog: ArsDialog(
+      dialog: DDialog(
         dialogStyle: dialogStyle,
         actions: actions,
         content: content,
@@ -211,42 +205,10 @@ class ArsAlertDialog extends DialogBackground {
   }
 }
 
-@deprecated
-class BlurDialogBackground extends DialogBackground {
-  ///Widget of dialog, you can use ars_dialog, Dialog, AlertDialog or Custom your own Dialog
-  final Widget? dialog;
-
-  ///Because blur dialog cover the barrier, you have to declare here
-  final bool? dismissable;
-
-  ///Action before dialog dismissed
-  final Function? onDismiss;
-
-  /// Creates an background filter that applies a Gaussian blur.
-  /// Default = 0
-  final double? blur;
-
-  /// Background color
-  final Color? color;
-
-  const BlurDialogBackground(
-      {Key? key,
-      this.color,
-      this.dialog,
-      this.dismissable,
-      this.blur,
-      this.onDismiss})
-      : super(key: key);
-}
-
 //A Dialog, but you can zoom on it
 class ZoomDialog extends DialogBackground {
   ///The (optional) content of the dialog is displayed in the center of the dialog in a lighter font.
   final Widget child;
-
-  /// Creates an background filter that applies a Gaussian blur.
-  /// Default = 0
-  final double? blur;
 
   /// Background color
   final Color? backgroundColor;
@@ -257,18 +219,19 @@ class ZoomDialog extends DialogBackground {
   ///Initialize zoom scale on dialog show
   final double initZoomScale;
 
-  ///Action before dialog dismissed
-  final Function? onDismiss;
-
-  const ZoomDialog(
-      {Key? key,
-      this.backgroundColor,
-      required this.child,
-      this.initZoomScale = 0,
-      this.blur,
-      this.zoomScale = 3,
-      this.onDismiss})
-      : super(key: key);
+  const ZoomDialog({
+    Key? key,
+    this.backgroundColor,
+    required this.child,
+    this.initZoomScale = 0,
+    this.zoomScale = 3,
+    double? blur,
+    Function? onDismiss,
+  }) : super(
+          key: key,
+          blur: blur,
+          onDismiss: onDismiss,
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -289,10 +252,10 @@ class ZoomDialog extends DialogBackground {
           scale: zoomScale,
           child: Center(
             child: Container(
-              child: child,
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
+              child: child,
             ),
           ),
         ),
@@ -307,7 +270,7 @@ class ZoomDialog extends DialogBackground {
 
 ///Blur background of dialog, you can use this class to make your custom dialog background blur
 class DialogBackground extends StatelessWidget {
-  ///Widget of dialog, you can use ars_dialog, Dialog, AlertDialog or Custom your own Dialog
+  ///Widget of dialog, you can use d_dialog, Dialog, AlertDialog or Custom your own Dialog
   final Widget? dialog;
 
   ///Because blur dialog cover the barrier, you have to declare here
@@ -322,13 +285,9 @@ class DialogBackground extends StatelessWidget {
 
   final Color? barrierColor;
 
-  @Deprecated("Use barrierColor instead")
-  final Color? color;
-
   const DialogBackground(
       {Key? key,
       this.dialog,
-      this.color,
       this.dismissable,
       this.blur,
       this.onDismiss,
@@ -380,7 +339,7 @@ class DialogBackground extends StatelessWidget {
                   ? Container()
                   : TweenAnimationBuilder(
                       tween: Tween<double>(begin: 0.1, end: blur ?? 0),
-                      duration: Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 300),
                       builder: (context, double? val, Widget? child) {
                         return BackdropFilter(
                           filter: ImageFilter.blur(
@@ -433,7 +392,7 @@ class DialogStyle {
   final ShapeBorder? shape;
 
   ///Bubble animation when your dialog will popup
-  @Deprecated("Use animatePopup on .show() instead")
+  @Deprecated('Use animatePopup on .show() instead')
   final bool? animatePopup;
 
   ///Dialog Transition Type

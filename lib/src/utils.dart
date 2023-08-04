@@ -1,4 +1,4 @@
-import 'package:ars_dialog/src/transition.dart';
+import 'package:d_dialog/src/transition.dart';
 import 'package:flutter/material.dart';
 
 class DialogUtils {
@@ -28,28 +28,29 @@ class DialogUtils {
         routeSettings: routeSettings,
         pageBuilder: (context, animation, secondaryAnimation) =>
             (useSafeArea ?? true) ? SafeArea(child: child) : child,
-        barrierColor: barrierColor ?? Color(0x00ffffff),
+        barrierColor: barrierColor ?? const Color(0x00ffffff),
         barrierDismissible: dismissable ?? true,
-        barrierLabel: "",
-        transitionDuration: transitionDuration ?? Duration(milliseconds: 500),
+        barrierLabel: '',
+        transitionDuration:
+            transitionDuration ?? const Duration(milliseconds: 500),
         transitionBuilder: (context, animation, secondaryAnimation, child) =>
             _animationWidget(animation, child),
         useRootNavigator: useRootNavigator ?? false,
       );
 
   Widget _animationWidget(Animation<double> animation, Widget child) {
-    switch (dialogTransitionType ?? DialogTransitionType.NONE) {
-      case DialogTransitionType.Bubble:
+    switch (dialogTransitionType ?? DialogTransitionType.none) {
+      case DialogTransitionType.bubble:
         return DialogTransition.bubble(animation, child);
-      case DialogTransitionType.LeftToRight:
+      case DialogTransitionType.leftToRight:
         return DialogTransition.transitionFromLeft(animation, child);
-      case DialogTransitionType.RightToLeft:
+      case DialogTransitionType.rightToLeft:
         return DialogTransition.transitionFromRight(animation, child);
-      case DialogTransitionType.TopToBottom:
+      case DialogTransitionType.topToBottom:
         return DialogTransition.transitionFromTop(animation, child);
-      case DialogTransitionType.BottomToTop:
+      case DialogTransitionType.bottomToTop:
         return DialogTransition.transitionFromBottom(animation, child);
-      case DialogTransitionType.Shrink:
+      case DialogTransitionType.shrink:
         return DialogTransition.shrink(animation, child);
       default:
     }

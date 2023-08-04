@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'multi_touch_gesture_detector.dart';
@@ -22,7 +21,7 @@ class Zoom extends StatefulWidget {
   final BoxShadow? canvasShadow;
   final Function? onTap;
 
-  Zoom(
+  const Zoom(
       {Key? key,
       required this.maxZoomWidth,
       required this.maxZoomHeight,
@@ -43,10 +42,11 @@ class Zoom extends StatefulWidget {
       this.onTap})
       : super(key: key);
 
-  _ZoomState createState() => _ZoomState();
+  @override
+  ZoomState createState() => ZoomState();
 }
 
-class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
+class ZoomState extends State<Zoom> with TickerProviderStateMixin {
   double localTop = 0.0;
   double changeTop = 0.0;
   double auxTop = 0.0;
@@ -62,8 +62,8 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
   double? scale = 1.0;
   double changeScale = 0.0;
   double zoom = 0.0;
-  Offset midlePoint = Offset(0.0, 0.0);
-  Offset relativeMidlePoint = Offset(0.0, 0.0);
+  Offset midlePoint = const Offset(0.0, 0.0);
+  Offset relativeMidlePoint = const Offset(0.0, 0.0);
   bool initOrientation = false;
   late bool portrait;
   late AnimationController scaleAnimation;
@@ -77,7 +77,7 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
         vsync: this,
         lowerBound: 0.0,
         upperBound: 1.0,
-        duration: Duration(milliseconds: 250));
+        duration: const Duration(milliseconds: 250));
     scaleAnimation.addListener(() {
       setState(() {
         if (doubleTapDown) {
@@ -146,15 +146,17 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
       if (widget.centerOnScale) {
         centerTop = (constraints.maxHeight - widget.maxZoomHeight * scale!) / 2;
       }
-    } else
+    } else {
       centerTop = 0.0;
+    }
 
     if ((widget.maxZoomWidth * scale!) < constraints.maxWidth) {
       if (widget.centerOnScale) {
         centerLeft = (constraints.maxWidth - widget.maxZoomWidth * scale!) / 2;
       }
-    } else
+    } else {
       centerLeft = 0.0;
+    }
 
     zoom = map(
         scale!,
@@ -183,8 +185,9 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
       double preScaleLeft =
           (relativeMidlePoint.dx - currentMidlePoint.dx) * -scale!;
       if ((auxLeft + localLeft + preScaleLeft) >
-          -((widget.maxZoomWidth * scale!) - constraints.maxWidth * scale))
+          -((widget.maxZoomWidth * scale!) - constraints.maxWidth * scale)) {
         scaleLeft = preScaleLeft;
+      }
     }
 
     if (currentMidlePoint.dy > relativeMidlePoint.dy) {
@@ -197,8 +200,9 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
       double preScaleTop =
           (relativeMidlePoint.dy - currentMidlePoint.dy) * -scale!;
       if ((auxTop + localTop + preScaleTop) >
-          -((widget.maxZoomHeight * scale!) - constraints.maxHeight * scale))
+          -((widget.maxZoomHeight * scale!) - constraints.maxHeight * scale)) {
         scaleTop = preScaleTop;
+      }
     }
   }
 
@@ -309,7 +313,7 @@ class _ZoomState extends State<Zoom> with TickerProviderStateMixin {
           gestures: {
             MultiTouchGestureRecognizer: GestureRecognizerFactoryWithHandlers<
                 MultiTouchGestureRecognizer>(
-              () => MultiTouchGestureRecognizer(),
+              MultiTouchGestureRecognizer.new,
               (MultiTouchGestureRecognizer instance) {
                 instance.onSingleTap = (point) {
                   if (widget.doubleTapZoom) {

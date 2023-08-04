@@ -1,20 +1,20 @@
-# Ars Dialog
-[![Fork](https://img.shields.io/github/forks/arsamme/flutter-dialogs?style=social)](https://github.com/arsamme/flutter-dialogs/fork)&nbsp; [![Star](https://img.shields.io/github/stars/arsamme/flutter-dialogs?style=social)](https://github.com/arsamme/flutter-dialogs)&nbsp; [![Watches](https://img.shields.io/github/watchers/arsamme/flutter-dialogs?style=social)](https://github.com/arsamme/flutter-dialogs/)&nbsp; [![Get the library](https://img.shields.io/badge/Get%20library-pub-blue)](https://pub.dev/packages/ars_dialog)&nbsp; [![Example](https://img.shields.io/badge/Example-Ex-success)](https://pub.dev/packages/ars_dialog/example)
+# DDialog
+[![Fork](https://img.shields.io/github/forks/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog/fork)&nbsp; [![Star](https://img.shields.io/github/stars/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog)&nbsp; [![Watches](https://img.shields.io/github/watchers/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog/)&nbsp; [![Get the library](https://img.shields.io/badge/Get%20library-pub-blue)](https://pub.dev/packages/ars_dialog)&nbsp; [![Example](https://img.shields.io/badge/Example-Ex-success)](https://pub.dev/packages/ars_dialog/example)
 
 Custom dialog with blur background, popup animation and progressDialog with native style.
 
-Not only helps you display dialog with a blurred background, ars_dialog is here to help you do many things. for example, with ars_dialog you can display `ProgressDialog` to the user once until it meets the end of `Future`!
+Not only helps you display dialog with a blurred background, d_dialog is here to help you do many things. for example, with d_dialog you can display `ProgressDialog` to the user once until it meets the end of `Future`!
 
-First of all, let's leave the old style with `showDialog(blablabla)`, with ArsDialog you have dialog extensions, you just simply call `.show(context)` at the end of your dialog and let the magic work!
+First of all, let's leave the old style with `showDialog(blablabla)`, with DDialog you have dialog extensions, you just simply call `.show(context)` at the end of your dialog and let the magic work!
 
-There are 5 types, they are `ArsDialog`, `ArsAlertDialog`, `ProgressDialog`, `CustomProgressDialog` and `ZoomDialog`.
+There are 5 types, they are `DDialog`, `DAlertDialog`, `ProgressDialog`, `CustomProgressDialog` and `ZoomDialog`.
 
-## ArsDialog
+## DDialog
 Is a raw dialog where you can view them right away without anything else
 ``` dart
-  await ArsDialog(
+  await DDialog(
     dialogStyle: DialogStyle(titleDivider: true),
-    title: Text("Hi, This is ars_dialog"),
+    title: Text("Hi, This is d_dialog"),
     content: Text("And here is your content, hoho... "),  
     actions: <Widget>[
       FlatButton(child: Text("You"),onPressed: () {}),
@@ -24,13 +24,13 @@ Is a raw dialog where you can view them right away without anything else
   ).show(context);
 ```
 
-## ArsAlertDialog
+## DAlertDialog
 Is a dialog where you can directly set the background attributes without be wrapped by `DialogBackground` and you can simply display them.
 
 ``` dart
-  await ArsAlertDialog(
+  await DAlertDialog(
     dialogStyle: DialogStyle(titleDivider: true),
-    title: Text("Hi, This is ArsAlertDialog"),
+    title: Text("Hi, This is DAlertDialog"),
     content: Text("And here is your content, hoho... "), 
     actions: <Widget>[
       FlatButton(child: Text("You"),onPressed: () {}),
@@ -39,7 +39,7 @@ Is a dialog where you can directly set the background attributes without be wrap
     ],
   ).show(context);
 ``` 
- 
+
 ## ProgressDialog
 Will display the ProgressDialog with Android native style.
 
@@ -135,7 +135,7 @@ Is a dialog that you can zoom on it, you can zoom all type of widget on this dia
 You can simply call `show(context)` at the end of Flutter's built-in dialogs.
 
 ``` dart
-  AlertDialog( ... ).show(context);
+  DAlertDialog( ... ).show(context);
   SimpleDialog( ... ).show(context);
   Dialog( ... ).show(context);
   CupertinoDialog( ... ).show(context);
@@ -149,7 +149,7 @@ Note : BlurDialogBackground is depreceted, use `DialogBackground` instead!
 
 ``` dart
   await DialogBackground(
-    dialog: AlertDialog(
+    dialog: DAlertDialog(
       title: Text("Alert Dialog"),
       content: Text("Wohoo.. This is ordinary AlertDialog with Blur background"),
       actions: <Widget>[
@@ -162,6 +162,6 @@ Note : BlurDialogBackground is depreceted, use `DialogBackground` instead!
 ``` 
 
 ## Screenshot
-![Example](./example/screenshots/screenshot.gif)
+![Example](screenshots/screenshot.gif)
 
 Inspired by [NDialog](https://pub.dev/packages/ndialog)

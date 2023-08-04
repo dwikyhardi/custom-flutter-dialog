@@ -1,11 +1,15 @@
-name: ars_dialog
+name: d_dialog
 description: Dialog material widget with blur background and popup animation
-version: 1.0.8
-homepage: https://github.com/arsamme/flutter-dialogs
+version: 1.0.0
+homepage: https://github.com/dwikyhardi/custom-flutter-dialog
+
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^2.0.1

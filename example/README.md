@@ -1,5 +1,5 @@
 # DDialog
-[![Fork](https://img.shields.io/github/forks/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog/fork)&nbsp; [![Star](https://img.shields.io/github/stars/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog)&nbsp; [![Watches](https://img.shields.io/github/watchers/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog/)&nbsp; [![Get the library](https://img.shields.io/badge/Get%20library-pub-blue)](https://pub.dev/packages/ars_dialog)&nbsp; [![Example](https://img.shields.io/badge/Example-Ex-success)](https://pub.dev/packages/ars_dialog/example)
+[![Fork](https://img.shields.io/github/forks/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog/fork)&nbsp; [![Star](https://img.shields.io/github/stars/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog)&nbsp; [![Watches](https://img.shields.io/github/watchers/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog/)&nbsp; [![Get the library](https://img.shields.io/badge/Get%20library-pub-blue)](https://pub.dev/packages/d_dialog)&nbsp; [![Example](https://img.shields.io/badge/Example-Ex-success)](https://pub.dev/packages/d_dialog/example)
 
 Custom dialog with blur background, popup animation and progressDialog with native style.
 
@@ -39,7 +39,7 @@ Is a dialog where you can directly set the background attributes without be wrap
     ],
   ).show(context);
 ``` 
-
+ 
 ## ProgressDialog
 Will display the ProgressDialog with Android native style.
 
@@ -162,6 +162,6 @@ Note : BlurDialogBackground is depreceted, use `DialogBackground` instead!
 ``` 
 
 ## Screenshot
-![Example](screenshots/screenshot.gif)
+![Example](./example/screenshots/screenshot.gif)
 
 Inspired by [NDialog](https://pub.dev/packages/ndialog)

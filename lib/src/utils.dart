@@ -1,4 +1,4 @@
-import 'package:d_dialog/src/transition.dart';
+import 'package:custom_flutter_dialog_plus/src/transition.dart';
 import 'package:flutter/material.dart';
 
 class DialogUtils {

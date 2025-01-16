@@ -1,5 +1,6 @@
 # DDialog
-[![Fork](https://img.shields.io/github/forks/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog/fork)&nbsp; [![Star](https://img.shields.io/github/stars/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog)&nbsp; [![Watches](https://img.shields.io/github/watchers/dwikyhardi/custom-flutter-dialog?style=social)](https://github.com/dwikyhardi/custom-flutter-dialog/)&nbsp; [![Get the library](https://img.shields.io/badge/Get%20library-pub-blue)](https://pub.dev/packages/d_dialog)&nbsp; [![Example](https://img.shields.io/badge/Example-Ex-success)](https://pub.dev/packages/d_dialog/example)
+
+[![Fork](https://img.shields.io/github/forks/OttomanDeveloper/custom-flutter-dialog?style=social)](https://github.com/OttomanDeveloper/custom-flutter-dialog/fork)&nbsp; [![Star](https://img.shields.io/github/stars/OttomanDeveloper/custom-flutter-dialog?style=social)](https://github.com/OttomanDeveloper/custom-flutter-dialog)&nbsp; [![Watches](https://img.shields.io/github/watchers/OttomanDeveloper/custom-flutter-dialog?style=social)](https://github.com/OttomanDeveloper/custom-flutter-dialog/)&nbsp; [![Get the library](https://img.shields.io/badge/Get%20library-pub-blue)](https://pub.dev/packages/custom_flutter_dialog_plus)&nbsp; [![Example](https://img.shields.io/badge/Example-Ex-success)](https://pub.dev/packages/custom_flutter_dialog_plus/example)
 
 Custom dialog with blur background, popup animation and progressDialog with native style.
 
@@ -10,7 +11,9 @@ First of all, let's leave the old style with `showDialog(blablabla)`, with DDial
 There are 5 types, they are `DDialog`, `DAlertDialog`, `ProgressDialog`, `CustomProgressDialog` and `ZoomDialog`.
 
 ## DDialog
+
 Is a raw dialog where you can view them right away without anything else
+
 ``` dart
   await DDialog(
     dialogStyle: DialogStyle(titleDivider: true),
@@ -25,6 +28,7 @@ Is a raw dialog where you can view them right away without anything else
 ```
 
 ## DAlertDialog
+
 Is a dialog where you can directly set the background attributes without be wrapped by `DialogBackground` and you can simply display them.
 
 ``` dart
@@ -38,9 +42,10 @@ Is a dialog where you can directly set the background attributes without be wrap
       FlatButton(child: Text("Awesome"),onPressed: () {}),
     ],
   ).show(context);
-``` 
- 
+```
+
 ## ProgressDialog
+
 Will display the ProgressDialog with Android native style.
 
 ``` dart
@@ -66,6 +71,7 @@ Will display the ProgressDialog with Android native style.
 ```
 
 ## CustomProgressDialog
+
 Will display a progress dialog with customizable widgets
 
 ``` dart
@@ -117,8 +123,8 @@ await CustomProgressDialog.future(
 ```
 
 ## ZoomDialog
-Is a dialog that you can zoom on it, you can zoom all type of widget on this dialog, simply write this code and boom, there you go!
 
+Is a dialog that you can zoom on it, you can zoom all type of widget on this dialog, simply write this code and boom, there you go!
 
 ``` dart
   await ZoomDialog(
@@ -129,9 +135,10 @@ Is a dialog that you can zoom on it, you can zoom all type of widget on this dia
       padding: EdgeInsets.all(20),
     ),
   ).show(context);
-``` 
+```
 
-## Dialog Extensions!
+## Dialog Extensions
+
 You can simply call `show(context)` at the end of Flutter's built-in dialogs.
 
 ``` dart
@@ -143,6 +150,7 @@ You can simply call `show(context)` at the end of Flutter's built-in dialogs.
 ```
 
 ## DialogBackground
+
 You can use DialogBackground to create your own custom dialog and display them easily, not only that, you can also change the barrierColor / background color and add little bit blur effects there.
 
 Note : BlurDialogBackground is depreceted, use `DialogBackground` instead!
@@ -159,9 +167,10 @@ Note : BlurDialogBackground is depreceted, use `DialogBackground` instead!
       ],
     ),
   ).show(context); 
-``` 
+```
 
 ## Screenshot
+
 ![Example](./example/screenshots/screenshot.gif)
 
 Inspired by [NDialog](https://pub.dev/packages/ndialog)

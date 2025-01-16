@@ -1,8 +1,7 @@
-name: d_dialog
+name: custom_flutter_dialog_plus
 description: Dialog material widget with blur background and popup animation
-version: 1.0.1
-homepage: https://github.com/dwikyhardi/custom-flutter-dialog
-
+version: 1.0.3
+homepage: https://github.com/OttomanDeveloper/custom-flutter-dialog
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -12,4 +11,4 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
-  flutter_lints: ^2.0.1
+  flutter_lints: ^5.0.0

@@ -1,6 +1,3 @@
-///By Mochamad Nizwar Syafuan
-///nizwar@merahputih.id
-///==================================================================================
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:d_dialog/d_dialog.dart';
@@ -38,7 +35,7 @@ extension AlertDialogShow on AlertDialog {
     DialogTransitionType? dialogTransitionType,
   }) =>
       DialogUtils(
-        barrierColor: barrierColor ?? Colors.black.withOpacity(.5),
+        barrierColor: barrierColor ?? Colors.black.withValues(alpha: .5),
         child: this,
         dismissable: barrierDismissible,
         dialogTransitionType: dialogTransitionType,
@@ -60,7 +57,7 @@ extension SimpleDialogShow on SimpleDialog {
     DialogTransitionType? dialogTransitionType,
   }) =>
       DialogUtils(
-        barrierColor: barrierColor ?? Colors.black.withOpacity(.5),
+        barrierColor: barrierColor ?? Colors.black.withValues(alpha: .5),
         child: this,
         dismissable: barrierDismissible,
         dialogTransitionType: dialogTransitionType,

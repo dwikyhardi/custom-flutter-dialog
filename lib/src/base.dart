@@ -20,14 +20,18 @@ class DDialog extends StatelessWidget {
   ///The (optional) set of actions that are displayed at the bottom of the dialog.
   final List<Widget>? actions;
 
-  const DDialog(
-      {Key? key, this.dialogStyle, this.title, this.content, this.actions})
-      : super(key: key);
+  const DDialog({
+    super.key,
+    this.dialogStyle,
+    this.title,
+    this.content,
+    this.actions,
+  });
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final DialogTheme dialogTheme = DialogTheme.of(context);
+    final DialogThemeData dialogTheme = DialogTheme.of(context);
     final DialogStyle style = dialogStyle ?? DialogStyle();
 
     String? label = style.semanticsLabel;
@@ -148,7 +152,7 @@ class DDialog extends StatelessWidget {
         child: this,
         dialogTransitionType: transitionType,
         dismissable: dismissable,
-        barrierColor: Colors.black.withOpacity(.5),
+        barrierColor: Colors.black.withValues(alpha: .5),
         transitionDuration: transitionDuration,
       ).show(context) as Future<T?>;
 }
@@ -171,21 +175,16 @@ class DAlertDialog extends DialogBackground {
   final Color? backgroundColor;
 
   const DAlertDialog({
-    Key? key,
+    super.key,
     this.backgroundColor,
     this.dialogStyle,
     this.title,
     this.content,
     this.actions,
-    double? blur,
-    bool? dismissable,
-    Function? onDismiss,
-  }) : super(
-          key: key,
-          onDismiss: onDismiss,
-          dismissable: dismissable,
-          blur: blur,
-        );
+    super.blur,
+    super.dismissable,
+    super.onDismiss,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -220,18 +219,14 @@ class ZoomDialog extends DialogBackground {
   final double initZoomScale;
 
   const ZoomDialog({
-    Key? key,
+    super.key,
     this.backgroundColor,
     required this.child,
     this.initZoomScale = 0,
     this.zoomScale = 3,
-    double? blur,
-    Function? onDismiss,
-  }) : super(
-          key: key,
-          blur: blur,
-          onDismiss: onDismiss,
-        );
+    super.blur,
+    super.onDismiss,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -285,14 +280,14 @@ class DialogBackground extends StatelessWidget {
 
   final Color? barrierColor;
 
-  const DialogBackground(
-      {Key? key,
-      this.dialog,
-      this.dismissable,
-      this.blur,
-      this.onDismiss,
-      this.barrierColor})
-      : super(key: key);
+  const DialogBackground({
+    super.key,
+    this.dialog,
+    this.dismissable,
+    this.blur,
+    this.onDismiss,
+    this.barrierColor,
+  });
 
   ///Show dialog directly
   // Future show<T>(BuildContext context) => showDialog<T>(context: context, builder: (context) => this, barrierColor: barrierColor, barrierDismissible: dismissable ?? true);
@@ -305,7 +300,7 @@ class DialogBackground extends StatelessWidget {
         child: this,
         dialogTransitionType: transitionType,
         dismissable: dismissable,
-        barrierColor: barrierColor ?? Colors.black.withOpacity(.5),
+        barrierColor: barrierColor ?? Colors.black.withValues(alpha: .5),
         transitionDuration: transitionDuration,
       ).show(context) as Future<T?>;
 
@@ -314,13 +309,13 @@ class DialogBackground extends StatelessWidget {
     return Material(
       type: MaterialType.canvas,
       color: Colors.transparent,
-      child: WillPopScope(
-        onWillPop: () async {
-          if (dismissable ?? true) {
-            if (onDismiss != null) onDismiss!();
-            Navigator.pop(context);
-          }
-          return false;
+      child: PopScope(
+        canPop: dismissable ?? true,
+        onPopInvokedWithResult: (didPop, _) {
+          if (didPop) return;
+          if (onDismiss != null) onDismiss!();
+
+          Navigator.pop(context);
         },
         child: Stack(
           clipBehavior: Clip.antiAlias,

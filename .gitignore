@@ -10,3 +10,7 @@ build/
 
 # Directory created by dartdoc
 doc/api/
+
+# FVM Version Cache
+.fvm/
+.idea/

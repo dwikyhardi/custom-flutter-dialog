@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   final String title;
 
-  const MyHomePage({Key? key,required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class MyHomePage extends StatelessWidget {
         children: <Widget>[
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             child: Text(
               'DAlertDialog show',
               style: TextStyle(color: Colors.white),
@@ -49,7 +51,7 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             child: Text(
               'DDialog can do it too!',
               style: TextStyle(color: Colors.white),
@@ -66,7 +68,7 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             onPressed: () async {
               ProgressDialog progressDialog = ProgressDialog(
                 context,
@@ -101,7 +103,7 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             onPressed: () async {
               CustomProgressDialog progressDialog = CustomProgressDialog(
                 context,
@@ -128,34 +130,34 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             onPressed: () async {
               if (kDebugMode) {
                 print(await ProgressDialog.future(
-                context,
-                blur: 0.0,
-                future: Future.delayed(Duration(seconds: 5), () {
-                  return 'HIYAAA';
-                }),
-                onProgressError: (error) {
-                  if (kDebugMode) {
-                    print('Do something onProgressError');
-                  }
-                },
-                onProgressFinish: (data) {
-                  if (kDebugMode) {
-                    print('Do something onProgressFinish');
-                  }
-                },
-                onDismiss: () {
-                  if (kDebugMode) {
-                    print('Dismissed');
-                  }
-                },
-                message: Text('Please Wait'),
-                cancelText: Text('Batal'),
-                title: Text('Loging in'),
-              ));
+                  context,
+                  blur: 0.0,
+                  future: Future.delayed(Duration(seconds: 5), () {
+                    return 'HIYAAA';
+                  }),
+                  onProgressError: (error) {
+                    if (kDebugMode) {
+                      print('Do something onProgressError');
+                    }
+                  },
+                  onProgressFinish: (data) {
+                    if (kDebugMode) {
+                      print('Do something onProgressFinish');
+                    }
+                  },
+                  onDismiss: () {
+                    if (kDebugMode) {
+                      print('Dismissed');
+                    }
+                  },
+                  message: Text('Please Wait'),
+                  cancelText: Text('Batal'),
+                  title: Text('Loging in'),
+                ));
               }
             },
             child: Text('Progress Dialog Future',
@@ -163,31 +165,31 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             onPressed: () async {
               if (kDebugMode) {
                 print(await CustomProgressDialog.future(
-                context,
-                backgroundColor: Colors.blue.withOpacity(.5),
-                future: Future.delayed(Duration(seconds: 5), () {
-                  return 'WOHOOO';
-                }),
-                onProgressError: (error) {
-                  if (kDebugMode) {
-                    print('Do something onProgressError');
-                  }
-                },
-                onProgressFinish: (data) {
-                  if (kDebugMode) {
-                    print('Do something onProgressFinish');
-                  }
-                },
-                onDismiss: () {
-                  if (kDebugMode) {
-                    print('Dismissed');
-                  }
-                },
-              ));
+                  context,
+                  backgroundColor: Colors.blue.withValues(alpha: .5),
+                  future: Future.delayed(Duration(seconds: 5), () {
+                    return 'WOHOOO';
+                  }),
+                  onProgressError: (error) {
+                    if (kDebugMode) {
+                      print('Do something onProgressError');
+                    }
+                  },
+                  onProgressFinish: (data) {
+                    if (kDebugMode) {
+                      print('Do something onProgressFinish');
+                    }
+                  },
+                  onDismiss: () {
+                    if (kDebugMode) {
+                      print('Dismissed');
+                    }
+                  },
+                ));
               }
             },
             child: Text('Custom Progress Dialog Future',
@@ -195,7 +197,7 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             onPressed: () async {
               await DAlertDialog(
                 dialogStyle: DialogStyle(titleDivider: true),
@@ -204,22 +206,19 @@ class MyHomePage extends StatelessWidget {
                 actions: <Widget>[
                   TextButton(
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.blue)),
+                        backgroundColor: WidgetStatePropertyAll(Colors.blue)),
                     child: Text('You'),
                     onPressed: () {},
                   ),
                   TextButton(
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.blue)),
+                        backgroundColor: WidgetStatePropertyAll(Colors.blue)),
                     child: Text('Are'),
                     onPressed: () {},
                   ),
                   TextButton(
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.blue)),
+                        backgroundColor: WidgetStatePropertyAll(Colors.blue)),
                     child: Text('Awesome'),
                     onPressed: () {},
                   )
@@ -231,7 +230,7 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             onPressed: () async {
               await DDialog(
                 dialogStyle: DialogStyle(titleDivider: true),
@@ -255,12 +254,11 @@ class MyHomePage extends StatelessWidget {
                 context,
               );
             },
-            child:
-                Text('Show DDialog', style: TextStyle(color: Colors.white)),
+            child: Text('Show DDialog', style: TextStyle(color: Colors.white)),
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             child: Text(
               'Show Alert Dialog\nWith Blur Background',
               style: TextStyle(color: Colors.white),
@@ -268,7 +266,7 @@ class MyHomePage extends StatelessWidget {
             ),
             onPressed: () async {
               await DialogBackground(
-                barrierColor: Colors.black.withOpacity(.5),
+                barrierColor: Colors.black.withValues(alpha: .5),
                 blur: 0,
                 dialog: AlertDialog(
                   title: Text('Alert Dialog'),
@@ -299,7 +297,7 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             child: Text(
               'Show Alert Dialog\nWith Custom Background Color',
               style: TextStyle(color: Colors.white),
@@ -307,7 +305,7 @@ class MyHomePage extends StatelessWidget {
             ),
             onPressed: () async {
               await DAlertDialog(
-                backgroundColor: Colors.red.withOpacity(.5),
+                backgroundColor: Colors.red.withValues(alpha: .5),
                 blur: 0,
                 title: Text('Alert Dialog'),
                 content: Text(
@@ -331,7 +329,7 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             child: Text(
               'Dialog Extension',
               style: TextStyle(color: Colors.white),
@@ -361,7 +359,7 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             child: Text(
               'CupertinoDialog Extension',
               style: TextStyle(color: Colors.white),
@@ -391,7 +389,7 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
             child: Text(
               'ZoomDIALOG',
               style: TextStyle(color: Colors.white),

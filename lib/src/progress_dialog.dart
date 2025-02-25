@@ -133,7 +133,7 @@ class ProgressDialog implements _ProgressDialog {
       _show = true;
       await DialogUtils(
         dismissable: dismissable,
-        barrierColor: backgroundColor ?? Colors.black.withOpacity(.5),
+        barrierColor: backgroundColor ?? Colors.black.withValues(alpha: .5),
         child: _progressDialogWidget,
         dialogTransitionType: dialogTransitionType,
         transitionDuration: transitionDuration,
@@ -233,7 +233,6 @@ class _ProgressDialogWidget extends StatefulWidget {
   _ProgressDialogWidgetState _dialogWidgetState = _ProgressDialogWidgetState();
 
   _ProgressDialogWidget({
-    Key? key,
     required this.dialogStyle,
     this.title,
     this.message,
@@ -244,7 +243,7 @@ class _ProgressDialogWidget extends StatefulWidget {
     this.loadingWidget,
     this.blur,
     this.backgroundColor,
-  }) : super(key: key);
+  });
 
   @override
   _ProgressDialogWidgetState createState() => _ProgressDialogWidgetState();
@@ -263,7 +262,7 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final DialogTheme dialogTheme = DialogTheme.of(context);
+    final DialogThemeData dialogTheme = DialogTheme.of(context);
 
     Widget? title = _title ?? widget.title;
     Widget? message = _message ?? widget.message;
@@ -342,11 +341,11 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   style: ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsets>(
+                    padding: WidgetStatePropertyAll(
                       const EdgeInsets.only(),
                     ),
-                    overlayColor: MaterialStateProperty.all<Color>(
-                      Colors.white.withOpacity(.3),
+                    overlayColor: WidgetStatePropertyAll(
+                      Colors.white.withValues(alpha: .3),
                     ),
                   ),
                   onPressed: () {
@@ -541,14 +540,13 @@ class _CustomProgressDialogWidget extends StatefulWidget {
       _CustomProgressDialogWidgetState();
 
   _CustomProgressDialogWidget({
-    Key? key,
     this.onCancel,
     this.dismissable,
     this.onDismiss,
     this.backgroundColor,
     this.loadingWidget,
     this.blur,
-  }) : super(key: key);
+  });
 
   @override
   _CustomProgressDialogWidgetState createState() =>
@@ -569,7 +567,7 @@ class _CustomProgressDialogWidgetState
   @override
   Widget build(BuildContext context) {
     Color backgroundColor = _backgroundColor ??
-        (widget.backgroundColor ?? Colors.black.withOpacity(.5));
+        (widget.backgroundColor ?? Colors.black.withValues(alpha: .5));
     Widget loadingWidget = (_loadingWidget ?? widget.loadingWidget) ??
         Container(
           padding: const EdgeInsets.all(10.0),

@@ -21,26 +21,26 @@ class Zoom extends StatefulWidget {
   final BoxShadow? canvasShadow;
   final Function? onTap;
 
-  const Zoom(
-      {Key? key,
-      required this.maxZoomWidth,
-      required this.maxZoomHeight,
-      required this.child,
-      this.onPositionUpdate,
-      this.onScaleUpdate,
-      this.backgroundColor = Colors.grey,
-      this.canvasColor = Colors.white,
-      this.scrollWeight = 7.0,
-      this.opacityScrollBars = 0.5,
-      this.colorScrollBars = Colors.black,
-      this.centerOnScale = true,
-      this.initZoom = 1.0,
-      this.enableScroll = true,
-      this.zoomSensibility = 1.0,
-      this.doubleTapZoom = true,
-      this.canvasShadow,
-      this.onTap})
-      : super(key: key);
+  const Zoom({
+    super.key,
+    required this.maxZoomWidth,
+    required this.maxZoomHeight,
+    required this.child,
+    this.onPositionUpdate,
+    this.onScaleUpdate,
+    this.backgroundColor = Colors.grey,
+    this.canvasColor = Colors.white,
+    this.scrollWeight = 7.0,
+    this.opacityScrollBars = 0.5,
+    this.colorScrollBars = Colors.black,
+    this.centerOnScale = true,
+    this.initZoom = 1.0,
+    this.enableScroll = true,
+    this.zoomSensibility = 1.0,
+    this.doubleTapZoom = true,
+    this.canvasShadow,
+    this.onTap,
+  });
 
   @override
   ZoomState createState() => ZoomState();

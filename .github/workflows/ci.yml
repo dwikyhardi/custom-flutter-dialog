@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-flutter
+      - name: Test release guards
+        run: python3 -m unittest discover -s .github/tests
+      - run: fvm flutter pub get
+      - run: fvm flutter analyze --no-pub
+      - run: fvm flutter test --no-pub
+      - name: Analyze example
+        run: fvm flutter analyze --no-pub
+        working-directory: example
+      - name: Validate package for publishing
+        run: fvm flutter pub publish --dry-run

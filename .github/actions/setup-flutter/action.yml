@@ -1,0 +1,14 @@
+name: Set up Flutter with FVM
+description: Install the Flutter SDK pinned in .fvmrc.
+runs:
+  using: composite
+  steps:
+    - name: Install FVM
+      shell: bash
+      run: |
+        set -euo pipefail
+        curl --fail --silent --show-error --location https://fvm.app/install.sh | bash
+        echo "$HOME/fvm/bin" >> "$GITHUB_PATH"
+    - name: Install pinned Flutter SDK
+      shell: bash
+      run: fvm install

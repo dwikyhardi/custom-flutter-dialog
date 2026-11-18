@@ -6,4 +6,4 @@ https://pub.dev/packages/zoom_widget
 * Origin repo :
 https://github.com/semakers/zoom-widget
 
-All copyright belong to the owner, i only modify a little to fit and fulfilled d_dialog features
+The original code is Copyright (c) 2017 Aijin Yuan (a.k.a. Vince Yuan), licensed under MIT. Its copyright and permission notices are retained in the [root license](../../../LICENSE).

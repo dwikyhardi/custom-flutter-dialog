@@ -1,7 +1,7 @@
 import 'package:d_dialog/d_dialog.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,9 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Blur Dialog',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: MyHomePage(title: 'Example BlurDialog'),
     );
   }
@@ -28,15 +26,14 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: ListView(
         padding: EdgeInsets.all(20),
         children: <Widget>[
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             child: Text(
               'DAlertDialog show',
               style: TextStyle(color: Colors.white),
@@ -51,7 +48,8 @@ class MyHomePage extends StatelessWidget {
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             child: Text(
               'DDialog can do it too!',
               style: TextStyle(color: Colors.white),
@@ -59,16 +57,15 @@ class MyHomePage extends StatelessWidget {
             onPressed: () {
               DDialog(
                 title: Text('Test'),
-                dialogStyle: DialogStyle(
-                  animatePopup: false,
-                ),
+                dialogStyle: DialogStyle(animatePopup: false),
                 content: Text('Iya iya'),
               ).show(context);
             },
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             onPressed: () async {
               ProgressDialog progressDialog = ProgressDialog(
                 context,
@@ -81,11 +78,14 @@ class MyHomePage extends StatelessWidget {
                   }
                 },
               );
-              progressDialog.setLoadingWidget(CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(Colors.red),
-              ));
+              progressDialog.setLoadingWidget(
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Colors.red),
+                ),
+              );
               progressDialog.setMessage(
-                  Text('Please Wait, Injecting your phone with my virus'));
+                Text('Please Wait, Injecting your phone with my virus'),
+              );
               progressDialog.setTitle(Text('Loading'));
               progressDialog.show(useSafeArea: false);
 
@@ -98,12 +98,15 @@ class MyHomePage extends StatelessWidget {
 
               progressDialog.dismiss();
             },
-            child:
-                Text('Progress Dialog', style: TextStyle(color: Colors.white)),
+            child: Text(
+              'Progress Dialog',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             onPressed: () async {
               CustomProgressDialog progressDialog = CustomProgressDialog(
                 context,
@@ -114,9 +117,11 @@ class MyHomePage extends StatelessWidget {
                   }
                 },
               );
-              progressDialog.setLoadingWidget(CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(Colors.red),
-              ));
+              progressDialog.setLoadingWidget(
+                CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Colors.red),
+                ),
+              );
               progressDialog.show(useSafeArea: false);
 
               await Future.delayed(Duration(seconds: 5));
@@ -125,79 +130,92 @@ class MyHomePage extends StatelessWidget {
 
               progressDialog.dismiss();
             },
-            child: Text('Custom Progress Dialog',
-                style: TextStyle(color: Colors.white)),
+            child: Text(
+              'Custom Progress Dialog',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             onPressed: () async {
               if (kDebugMode) {
-                print(await ProgressDialog.future(
-                  context,
-                  blur: 0.0,
-                  future: Future.delayed(Duration(seconds: 5), () {
-                    return 'HIYAAA';
-                  }),
-                  onProgressError: (error) {
-                    if (kDebugMode) {
-                      print('Do something onProgressError');
-                    }
-                  },
-                  onProgressFinish: (data) {
-                    if (kDebugMode) {
-                      print('Do something onProgressFinish');
-                    }
-                  },
-                  onDismiss: () {
-                    if (kDebugMode) {
-                      print('Dismissed');
-                    }
-                  },
-                  message: Text('Please Wait'),
-                  cancelText: Text('Batal'),
-                  title: Text('Loging in'),
-                ));
+                print(
+                  await ProgressDialog.future(
+                    context,
+                    blur: 0.0,
+                    future: Future.delayed(Duration(seconds: 5), () {
+                      return 'HIYAAA';
+                    }),
+                    onProgressError: (error) {
+                      if (kDebugMode) {
+                        print('Do something onProgressError');
+                      }
+                    },
+                    onProgressFinish: (data) {
+                      if (kDebugMode) {
+                        print('Do something onProgressFinish');
+                      }
+                    },
+                    onDismiss: () {
+                      if (kDebugMode) {
+                        print('Dismissed');
+                      }
+                    },
+                    message: Text('Please Wait'),
+                    cancelText: Text('Batal'),
+                    title: Text('Loging in'),
+                  ),
+                );
               }
             },
-            child: Text('Progress Dialog Future',
-                style: TextStyle(color: Colors.white)),
+            child: Text(
+              'Progress Dialog Future',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             onPressed: () async {
               if (kDebugMode) {
-                print(await CustomProgressDialog.future(
-                  context,
-                  backgroundColor: Colors.blue.withValues(alpha: .5),
-                  future: Future.delayed(Duration(seconds: 5), () {
-                    return 'WOHOOO';
-                  }),
-                  onProgressError: (error) {
-                    if (kDebugMode) {
-                      print('Do something onProgressError');
-                    }
-                  },
-                  onProgressFinish: (data) {
-                    if (kDebugMode) {
-                      print('Do something onProgressFinish');
-                    }
-                  },
-                  onDismiss: () {
-                    if (kDebugMode) {
-                      print('Dismissed');
-                    }
-                  },
-                ));
+                print(
+                  await CustomProgressDialog.future(
+                    context,
+                    backgroundColor: Colors.blue.withValues(alpha: .5),
+                    future: Future.delayed(Duration(seconds: 5), () {
+                      return 'WOHOOO';
+                    }),
+                    onProgressError: (error) {
+                      if (kDebugMode) {
+                        print('Do something onProgressError');
+                      }
+                    },
+                    onProgressFinish: (data) {
+                      if (kDebugMode) {
+                        print('Do something onProgressFinish');
+                      }
+                    },
+                    onDismiss: () {
+                      if (kDebugMode) {
+                        print('Dismissed');
+                      }
+                    },
+                  ),
+                );
               }
             },
-            child: Text('Custom Progress Dialog Future',
-                style: TextStyle(color: Colors.white)),
+            child: Text(
+              'Custom Progress Dialog Future',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             onPressed: () async {
               await DAlertDialog(
                 dialogStyle: DialogStyle(titleDivider: true),
@@ -206,59 +224,55 @@ class MyHomePage extends StatelessWidget {
                 actions: <Widget>[
                   TextButton(
                     style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+                      backgroundColor: WidgetStatePropertyAll(Colors.blue),
+                    ),
                     child: Text('You'),
                     onPressed: () {},
                   ),
                   TextButton(
                     style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+                      backgroundColor: WidgetStatePropertyAll(Colors.blue),
+                    ),
                     child: Text('Are'),
                     onPressed: () {},
                   ),
                   TextButton(
                     style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+                      backgroundColor: WidgetStatePropertyAll(Colors.blue),
+                    ),
                     child: Text('Awesome'),
                     onPressed: () {},
-                  )
+                  ),
                 ],
               ).show(context);
             },
-            child: Text('Show DAlertDialog',
-                style: TextStyle(color: Colors.white)),
+            child: Text(
+              'Show DAlertDialog',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             onPressed: () async {
               await DDialog(
                 dialogStyle: DialogStyle(titleDivider: true),
                 title: Text('Hi, This is DDialog'),
                 content: Text('And here is your content, hoho... '),
                 actions: <Widget>[
-                  TextButton(
-                    child: Text('You'),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: Text('Are'),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: Text('Awesome'),
-                    onPressed: () {},
-                  )
+                  TextButton(child: Text('You'), onPressed: () {}),
+                  TextButton(child: Text('Are'), onPressed: () {}),
+                  TextButton(child: Text('Awesome'), onPressed: () {}),
                 ],
-              ).show(
-                context,
-              );
+              ).show(context);
             },
             child: Text('Show DDialog', style: TextStyle(color: Colors.white)),
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             child: Text(
               'Show Alert Dialog\nWith Blur Background',
               style: TextStyle(color: Colors.white),
@@ -271,33 +285,22 @@ class MyHomePage extends StatelessWidget {
                 dialog: AlertDialog(
                   title: Text('Alert Dialog'),
                   content: Text(
-                      'Wohoo.. This is ordinary AlertDialog with Blur background'),
+                    'Wohoo.. This is ordinary AlertDialog with Blur background',
+                  ),
                   actions: <Widget>[
-                    TextButton(
-                      child: Text('You'),
-                      onPressed: () {},
-                    ),
-                    TextButton(
-                      child: Text('Are'),
-                      onPressed: () {},
-                    ),
-                    TextButton(
-                      child: Text('Awesome'),
-                      onPressed: () {},
-                    )
+                    TextButton(child: Text('You'), onPressed: () {}),
+                    TextButton(child: Text('Are'), onPressed: () {}),
+                    TextButton(child: Text('Awesome'), onPressed: () {}),
                   ],
                 ),
-              ).show(
-                context,
-              );
+              ).show(context);
             },
           ),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             child: Text(
               'Show Alert Dialog\nWith Custom Background Color',
               style: TextStyle(color: Colors.white),
@@ -309,27 +312,20 @@ class MyHomePage extends StatelessWidget {
                 blur: 0,
                 title: Text('Alert Dialog'),
                 content: Text(
-                    'Wohoo.. This is ordinary AlertDialog with Custom Color background'),
+                  'Wohoo.. This is ordinary AlertDialog with Custom Color background',
+                ),
                 actions: <Widget>[
-                  TextButton(
-                    child: Text('You'),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: Text('Are'),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: Text('Awesome'),
-                    onPressed: () {},
-                  )
+                  TextButton(child: Text('You'), onPressed: () {}),
+                  TextButton(child: Text('Are'), onPressed: () {}),
+                  TextButton(child: Text('Awesome'), onPressed: () {}),
                 ],
               ).show(context);
             },
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             child: Text(
               'Dialog Extension',
               style: TextStyle(color: Colors.white),
@@ -339,27 +335,20 @@ class MyHomePage extends StatelessWidget {
               await AlertDialog(
                 title: Text('Alert Dialog'),
                 content: Text(
-                    'Wohoo.. This is ordinary AlertDialog with Blur background'),
+                  'Wohoo.. This is ordinary AlertDialog with Blur background',
+                ),
                 actions: <Widget>[
-                  TextButton(
-                    child: Text('You'),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: Text('Are'),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: Text('Awesome'),
-                    onPressed: () {},
-                  )
+                  TextButton(child: Text('You'), onPressed: () {}),
+                  TextButton(child: Text('Are'), onPressed: () {}),
+                  TextButton(child: Text('Awesome'), onPressed: () {}),
                 ],
               ).show(context);
             },
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             child: Text(
               'CupertinoDialog Extension',
               style: TextStyle(color: Colors.white),
@@ -369,27 +358,20 @@ class MyHomePage extends StatelessWidget {
               await CupertinoAlertDialog(
                 title: Text('Alert Dialog'),
                 content: Text(
-                    'Wohoo.. This is ordinary AlertDialog with Blur background'),
+                  'Wohoo.. This is ordinary AlertDialog with Blur background',
+                ),
                 actions: <Widget>[
-                  TextButton(
-                    child: Text('You'),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: Text('Are'),
-                    onPressed: () {},
-                  ),
-                  TextButton(
-                    child: Text('Awesome'),
-                    onPressed: () {},
-                  )
+                  TextButton(child: Text('You'), onPressed: () {}),
+                  TextButton(child: Text('Are'), onPressed: () {}),
+                  TextButton(child: Text('Awesome'), onPressed: () {}),
                 ],
               ).show(context);
             },
           ),
           TextButton(
             style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.blue)),
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
             child: Text(
               'ZoomDIALOG',
               style: TextStyle(color: Colors.white),

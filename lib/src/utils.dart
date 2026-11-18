@@ -1,5 +1,6 @@
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:d_dialog/src/transition.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DialogUtils {
   final bool? dismissable;
@@ -23,20 +24,28 @@ class DialogUtils {
   });
 
   ///Show dialog directly
-  Future show<T>(BuildContext context) => showGeneralDialog<T>(
-        context: context,
-        routeSettings: routeSettings,
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            (useSafeArea ?? true) ? SafeArea(child: child) : child,
-        barrierColor: barrierColor ?? const Color(0x00ffffff),
-        barrierDismissible: dismissable ?? true,
-        barrierLabel: '',
-        transitionDuration:
-            transitionDuration ?? const Duration(milliseconds: 500),
-        transitionBuilder: (context, animation, secondaryAnimation, child) =>
-            _animationWidget(animation, child),
-        useRootNavigator: useRootNavigator ?? false,
-      );
+  Future<T?> show<T>(BuildContext context) => showGeneralDialog<T>(
+    context: context,
+    routeSettings: routeSettings,
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        (useSafeArea ?? true) ? SafeArea(child: child) : child,
+    barrierColor: barrierColor ?? const Color(0x00ffffff),
+    barrierDismissible: dismissable ?? true,
+    barrierLabel:
+        Localizations.of<MaterialLocalizations>(
+          context,
+          MaterialLocalizations,
+        )?.modalBarrierDismissLabel ??
+        Localizations.of<CupertinoLocalizations>(
+          context,
+          CupertinoLocalizations,
+        )?.modalBarrierDismissLabel ??
+        const DefaultMaterialLocalizations().modalBarrierDismissLabel,
+    transitionDuration: transitionDuration ?? const Duration(milliseconds: 500),
+    transitionBuilder: (context, animation, secondaryAnimation, child) =>
+        _animationWidget(animation, child),
+    useRootNavigator: useRootNavigator ?? false,
+  );
 
   Widget _animationWidget(Animation<double> animation, Widget child) {
     switch (dialogTransitionType ?? DialogTransitionType.none) {

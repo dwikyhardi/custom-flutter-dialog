@@ -9,6 +9,22 @@ First of all, let's leave the old style with `showDialog(blablabla)`, with DDial
 
 There are 5 types, they are `DDialog`, `DAlertDialog`, `ProgressDialog`, `CustomProgressDialog` and `ZoomDialog`.
 
+## Version 2.0 compatibility
+
+Version 2.0 requires Flutter >=3.47.0 and Dart >=3.13.0 and is validated with Flutter 3.50.0.
+
+Dialogs, themes, styles and the `.show<T>(context)` extensions now use the extracted Material and Cupertino UI libraries. Use the same UI imports in your app as in [the example](example/lib/main.dart); legacy SDK dialog and theme types are different types. The required dependencies are listed in [pubspec.yaml](pubspec.yaml).
+
+Modern Material and Cupertino apps work without a legacy compatibility bridge. Material dialogs inherit the host theme and localization delegates, including localized dismiss and default cancel labels. Cupertino dialogs and custom `DialogBackground` widgets also work in a Cupertino-only app. Custom routes in a plain widgets app use an English dismiss label when no UI localizations are available.
+
+For local integration, override the hosted dependency in your app:
+
+```yaml
+dependency_overrides:
+  d_dialog:
+    path: /absolute/path/to/custom-flutter-dialog
+```
+
 ## DDialog
 Is a raw dialog where you can view them right away without anything else
 ``` dart
@@ -17,9 +33,9 @@ Is a raw dialog where you can view them right away without anything else
     title: Text("Hi, This is d_dialog"),
     content: Text("And here is your content, hoho... "),  
     actions: <Widget>[
-      FlatButton(child: Text("You"),onPressed: () {}),
-      FlatButton(child: Text("Are"),onPressed: () {}),
-      FlatButton(child: Text("Awesome"),onPressed: () {}),
+      TextButton(child: Text("You"),onPressed: () {}),
+      TextButton(child: Text("Are"),onPressed: () {}),
+      TextButton(child: Text("Awesome"),onPressed: () {}),
     ],
   ).show(context);
 ```
@@ -33,9 +49,9 @@ Is a dialog where you can directly set the background attributes without be wrap
     title: Text("Hi, This is DAlertDialog"),
     content: Text("And here is your content, hoho... "), 
     actions: <Widget>[
-      FlatButton(child: Text("You"),onPressed: () {}),
-      FlatButton(child: Text("Are"),onPressed: () {}),
-      FlatButton(child: Text("Awesome"),onPressed: () {}),
+      TextButton(child: Text("You"),onPressed: () {}),
+      TextButton(child: Text("Are"),onPressed: () {}),
+      TextButton(child: Text("Awesome"),onPressed: () {}),
     ],
   ).show(context);
 ``` 
@@ -111,7 +127,7 @@ await CustomProgressDialog.future(
       child:CircularProgressIndicator(),
     ),
   ),
-  backgroundColor: Colors.blue.withOpacity(.5),
+  backgroundColor: Colors.blue.withValues(alpha: .5),
 )
 
 ```
@@ -132,13 +148,12 @@ Is a dialog that you can zoom on it, you can zoom all type of widget on this dia
 ``` 
 
 ## Dialog Extensions!
-You can simply call `show(context)` at the end of Flutter's built-in dialogs.
+You can call `show(context)` on the Material and Cupertino dialogs from your UI imports.
 
 ``` dart
   DAlertDialog( ... ).show(context);
   SimpleDialog( ... ).show(context);
   Dialog( ... ).show(context);
-  CupertinoDialog( ... ).show(context);
   CupertinoAlertDialog( ... ).show(context);
 ```
 
@@ -153,9 +168,9 @@ Note : BlurDialogBackground is depreceted, use `DialogBackground` instead!
       title: Text("Alert Dialog"),
       content: Text("Wohoo.. This is ordinary AlertDialog with Blur background"),
       actions: <Widget>[
-        FlatButton(child: Text("You")onPressed: () {}),
-        FlatButton(child: Text("Are")onPressed: () {}),
-        FlatButton(child: Text("Awesome")onPressed: () {}),
+        TextButton(child: Text("You"),onPressed: () {}),
+        TextButton(child: Text("Are"),onPressed: () {}),
+        TextButton(child: Text("Awesome"),onPressed: () {}),
       ],
     ),
   ).show(context); 
@@ -165,3 +180,7 @@ Note : BlurDialogBackground is depreceted, use `DialogBackground` instead!
 ![Example](./example/screenshots/screenshot.gif)
 
 Inspired by [NDialog](https://pub.dev/packages/ndialog)
+
+## License
+
+MIT; see [LICENSE](LICENSE). Earlier public-domain releases retain their original terms.

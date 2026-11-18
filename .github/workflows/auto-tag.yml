@@ -1,0 +1,71 @@
+name: Auto Tag Release
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [master]
+
+concurrency:
+  group: package-release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    if: >-
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.workflow_run.head_sha }}
+          # GITHUB_TOKEN tag pushes cannot trigger the publishing workflow.
+          token: ${{ secrets.RELEASE_PAT || github.token }}
+      - name: Check unpublished version
+        id: version
+        run: |
+          set -euo pipefail
+          git merge-base --is-ancestor HEAD origin/master
+          version="$(awk '/^version:/ {print $2; exit}' pubspec.yaml)"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Invalid release version: $version"
+            exit 1
+          fi
+          tag="d_dialog-v$version"
+          status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' \
+            "https://pub.dev/api/packages/d_dialog/versions/$version")"
+          case "$status" in
+            200) echo "Version $version is already published; skipping."; exit 0 ;;
+            404) ;;
+            *) echo "::error::pub.dev version lookup returned HTTP $status"; exit 1 ;;
+          esac
+          if git show-ref --verify --quiet "refs/tags/$tag"; then
+            test "$(git rev-list -n 1 "$tag")" = "$(git rev-parse HEAD)"
+            echo "Tag $tag already exists. Re-run its Publish workflow if needed."
+            exit 0
+          fi
+          echo "release=true" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - uses: ./.github/actions/setup-flutter
+        if: steps.version.outputs.release == 'true'
+      - name: Validate and push release tag
+        if: steps.version.outputs.release == 'true'
+        env:
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+          RELEASE_PAT: ${{ secrets.RELEASE_PAT }}
+        run: |
+          set -euo pipefail
+          if [ -z "$RELEASE_PAT" ]; then
+            echo "::error::Configure RELEASE_PAT with Contents read/write access to this repository."
+            exit 1
+          fi
+          fvm flutter pub get
+          fvm flutter pub publish --dry-run
+          git tag "$RELEASE_TAG"
+          git push origin "refs/tags/$RELEASE_TAG"

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 enum DialogTransitionType {
   shrink,
@@ -7,39 +7,49 @@ enum DialogTransitionType {
   rightToLeft,
   topToBottom,
   bottomToTop,
-  none
+  none,
 }
 
 class DialogTransition {
   static Widget transitionFromLeft(Animation<double> animation, Widget child) {
     return SlideTransition(
-      position: Tween<Offset>(begin: const Offset(-1.0, 0.0), end: Offset.zero)
-          .animate(animation),
+      position: Tween<Offset>(
+        begin: const Offset(-1.0, 0.0),
+        end: Offset.zero,
+      ).animate(animation),
       child: child,
     );
   }
 
   static Widget transitionFromRight(Animation<double> animation, Widget child) {
     return SlideTransition(
-      position: Tween<Offset>(begin: const Offset(1.0, 0.0), end: Offset.zero)
-          .animate(animation),
+      position: Tween<Offset>(
+        begin: const Offset(1.0, 0.0),
+        end: Offset.zero,
+      ).animate(animation),
       child: child,
     );
   }
 
   static Widget transitionFromTop(Animation<double> animation, Widget child) {
     return SlideTransition(
-      position: Tween<Offset>(begin: const Offset(0.0, -1.0), end: Offset.zero)
-          .animate(animation),
+      position: Tween<Offset>(
+        begin: const Offset(0.0, -1.0),
+        end: Offset.zero,
+      ).animate(animation),
       child: child,
     );
   }
 
   static Widget transitionFromBottom(
-      Animation<double> animation, Widget child) {
+    Animation<double> animation,
+    Widget child,
+  ) {
     return SlideTransition(
-      position: Tween<Offset>(begin: const Offset(0.0, 1.0), end: Offset.zero)
-          .animate(animation),
+      position: Tween<Offset>(
+        begin: const Offset(0.0, 1.0),
+        end: Offset.zero,
+      ).animate(animation),
       child: child,
     );
   }
@@ -47,8 +57,9 @@ class DialogTransition {
   static Widget bubble(Animation<double> animation, Widget child) {
     return ScaleTransition(
       scale: CurvedAnimation(
-          parent: Tween<double>(begin: 0, end: 1).animate(animation),
-          curve: Curves.elasticOut),
+        parent: Tween<double>(begin: 0, end: 1).animate(animation),
+        curve: Curves.elasticOut,
+      ),
       alignment: Alignment.center,
       child: child,
     );

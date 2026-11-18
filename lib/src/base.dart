@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:d_dialog/src/transition.dart';
 import 'package:d_dialog/src/utils.dart';
 import 'package:d_dialog/src/zoom_widget/zoom_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// DDialog widget
 class DDialog extends StatelessWidget {
@@ -42,25 +42,21 @@ class DDialog extends StatelessWidget {
         children: <Widget>[
           title != null
               ? Padding(
-                  padding: style.titlePadding ??
+                  padding:
+                      style.titlePadding ??
                       const EdgeInsets.only(left: 15.0, right: 15.0, top: 10.0),
                   child: DefaultTextStyle(
-                    style: style.titleTextStyle ??
+                    style:
+                        style.titleTextStyle ??
                         dialogTheme.titleTextStyle ??
                         theme.textTheme.titleLarge!,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Semantics(
-                          namesRoute: true,
-                          label: label,
-                          child: title,
-                        ),
+                        Semantics(namesRoute: true, label: label, child: title),
                         style.titleDivider ?? false
                             ? const Divider()
-                            : Container(
-                                height: 10.0,
-                              )
+                            : Container(height: 10.0),
                       ],
                     ),
                   ),
@@ -69,11 +65,17 @@ class DDialog extends StatelessWidget {
           content != null
               ? Flexible(
                   child: Padding(
-                    padding: style.contentPadding ??
+                    padding:
+                        style.contentPadding ??
                         const EdgeInsets.only(
-                            right: 15.0, left: 15.0, top: 0.0, bottom: 15.0),
+                          right: 15.0,
+                          left: 15.0,
+                          top: 0.0,
+                          bottom: 15.0,
+                        ),
                     child: DefaultTextStyle(
-                      style: style.contentTextStyle ??
+                      style:
+                          style.contentTextStyle ??
                           dialogTheme.contentTextStyle ??
                           theme.textTheme.titleMedium!,
                       child: Semantics(child: content),
@@ -83,8 +85,8 @@ class DDialog extends StatelessWidget {
               : Container(),
           actions != null
               ? Theme(
-                  data: ThemeData(
-                    buttonTheme: ButtonThemeData(
+                  data: theme.copyWith(
+                    buttonTheme: theme.buttonTheme.copyWith(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0),
                       ),
@@ -94,27 +96,21 @@ class DDialog extends StatelessWidget {
                       ? IntrinsicHeight(
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: List.generate(
-                              actions!.length,
-                              (index) {
-                                return Expanded(child: actions![index]);
-                              },
-                            ),
+                            children: List.generate(actions!.length, (index) {
+                              return Expanded(child: actions![index]);
+                            }),
                           ),
                         )
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
-                          children: List.generate(
-                            actions!.length,
-                            (index) {
-                              return SizedBox(
-                                height: 50.0,
-                                child: actions![index],
-                              );
-                            },
-                          ),
+                          children: List.generate(actions!.length, (index) {
+                            return SizedBox(
+                              height: 50.0,
+                              child: actions![index],
+                            );
+                          }),
                         ),
                 )
               : const SizedBox.shrink(),
@@ -123,7 +119,8 @@ class DDialog extends StatelessWidget {
     );
 
     return Padding(
-      padding: MediaQuery.of(context).viewInsets +
+      padding:
+          MediaQuery.of(context).viewInsets +
           const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
       child: Center(
         child: ConstrainedBox(
@@ -135,8 +132,9 @@ class DDialog extends StatelessWidget {
             shape: style.borderRadius != null
                 ? RoundedRectangleBorder(borderRadius: style.borderRadius!)
                 : style.shape ??
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
             child: dialogChild,
           ),
         ),
@@ -144,17 +142,18 @@ class DDialog extends StatelessWidget {
     );
   }
 
-  Future<T?> show<T>(BuildContext context,
-          {DialogTransitionType? transitionType,
-          bool? dismissable,
-          Duration? transitionDuration}) =>
-      DialogUtils(
-        child: this,
-        dialogTransitionType: transitionType,
-        dismissable: dismissable,
-        barrierColor: Colors.black.withValues(alpha: .5),
-        transitionDuration: transitionDuration,
-      ).show(context) as Future<T?>;
+  Future<T?> show<T>(
+    BuildContext context, {
+    DialogTransitionType? transitionType,
+    bool? dismissable,
+    Duration? transitionDuration,
+  }) => DialogUtils(
+    child: this,
+    dialogTransitionType: transitionType,
+    dismissable: dismissable,
+    barrierColor: Colors.black.withValues(alpha: .5),
+    transitionDuration: transitionDuration,
+  ).show<T>(context);
 }
 
 ///Simple dialog with blur background and popup animations, use DialogStyle to custom it
@@ -292,17 +291,18 @@ class DialogBackground extends StatelessWidget {
   ///Show dialog directly
   // Future show<T>(BuildContext context) => showDialog<T>(context: context, builder: (context) => this, barrierColor: barrierColor, barrierDismissible: dismissable ?? true);
 
-  Future<T?> show<T>(BuildContext context,
-          {DialogTransitionType? transitionType,
-          bool? dismissable,
-          Duration? transitionDuration}) =>
-      DialogUtils(
-        child: this,
-        dialogTransitionType: transitionType,
-        dismissable: dismissable,
-        barrierColor: barrierColor ?? Colors.black.withValues(alpha: .5),
-        transitionDuration: transitionDuration,
-      ).show(context) as Future<T?>;
+  Future<T?> show<T>(
+    BuildContext context, {
+    DialogTransitionType? transitionType,
+    bool? dismissable,
+    Duration? transitionDuration,
+  }) => DialogUtils(
+    child: this,
+    dialogTransitionType: transitionType,
+    dismissable: dismissable,
+    barrierColor: barrierColor ?? Colors.black.withValues(alpha: .5),
+    transitionDuration: transitionDuration,
+  ).show<T>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -346,7 +346,7 @@ class DialogBackground extends StatelessWidget {
                       },
                     ),
             ),
-            dialog!
+            dialog!,
           ],
         ),
       ),

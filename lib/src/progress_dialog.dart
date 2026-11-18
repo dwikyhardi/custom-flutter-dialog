@@ -1,6 +1,7 @@
+import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:d_dialog/d_dialog.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 ///Typedef of Progress while on Progress Error
 typedef OnProgressError = Function(dynamic error);
@@ -91,19 +92,21 @@ class ProgressDialog implements _ProgressDialog {
   bool _show = false;
   late _ProgressDialogWidget _progressDialogWidget;
 
-  ProgressDialog(this.context,
-      {this.dialogTransitionType,
-      this.backgroundColor,
-      this.cancelText,
-      this.defaultLoadingWidget,
-      this.blur,
-      this.onCancel,
-      this.dismissable,
-      this.onDismiss,
-      this.title,
-      this.message,
-      this.dialogStyle,
-      this.transitionDuration}) {
+  ProgressDialog(
+    this.context, {
+    this.dialogTransitionType,
+    this.backgroundColor,
+    this.cancelText,
+    this.defaultLoadingWidget,
+    this.blur,
+    this.onCancel,
+    this.dismissable,
+    this.onDismiss,
+    this.title,
+    this.message,
+    this.dialogStyle,
+    this.transitionDuration,
+  }) {
     _initProgress();
   }
 
@@ -206,14 +209,20 @@ class ProgressDialog implements _ProgressDialog {
     pDialog.show(useSafeArea: useSafeArea);
 
     dynamic output;
-    await future.then((data) {
-      if (onProgressFinish != null) onProgressFinish = onProgressFinish!(data);
-      output = data;
-      pDialog.dismiss();
-    }).catchError((error) {
-      if (onProgressError != null) onProgressError = onProgressError!(error);
-      pDialog.dismiss();
-    });
+    await future
+        .then((data) {
+          if (onProgressFinish != null) {
+            onProgressFinish = onProgressFinish!(data);
+          }
+          output = data;
+          pDialog.dismiss();
+        })
+        .catchError((error) {
+          if (onProgressError != null) {
+            onProgressError = onProgressError!(error);
+          }
+          pDialog.dismiss();
+        });
 
     return output;
   }
@@ -267,22 +276,21 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
     Widget? title = _title ?? widget.title;
     Widget? message = _message ?? widget.message;
     Color? backgroundColor = _backgroundColor ?? widget.backgroundColor;
-    Widget loading = (_loading ?? widget.loadingWidget) ??
+    Widget loading =
+        (_loading ?? widget.loadingWidget) ??
         Container(
           padding: const EdgeInsets.all(10.0),
           height: 50.0,
           width: 50.0,
-          child: const CircularProgressIndicator(
-            strokeWidth: 3,
-          ),
+          child: const CircularProgressIndicator(strokeWidth: 3),
         );
 
     EdgeInsetsGeometry? msgPadding = title == null
         ? const EdgeInsets.all(15.0)
         : widget.onCancel == null
-            ? widget.dialogStyle.contentPadding ??
-                const EdgeInsets.fromLTRB(15.0, 0, 15.0, 15.0)
-            : const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0);
+        ? widget.dialogStyle.contentPadding ??
+              const EdgeInsets.fromLTRB(15.0, 0, 15.0, 15.0)
+        : const EdgeInsets.fromLTRB(15.0, 0, 15.0, 0);
 
     return DAlertDialog(
       title: title,
@@ -296,20 +304,23 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
         if (widget.onCancel != null) widget.onCancel!();
       },
       dialogStyle: DialogStyle(
-          backgroundColor: widget.dialogStyle.backgroundColor,
-          titleDivider: widget.dialogStyle.titleDivider,
-          borderRadius:
-              widget.dialogStyle.borderRadius ?? BorderRadius.circular(2.0),
-          contentPadding: msgPadding as EdgeInsets? ??
-              const EdgeInsets.symmetric(horizontal: 20.0),
-          contentTextStyle: widget.dialogStyle.contentTextStyle,
-          elevation: widget.dialogStyle.elevation,
-          semanticsLabel: widget.dialogStyle.semanticsLabel,
-          // animatePopup: widget.dialogStyle.animatePopup ?? true,
-          shape: widget.dialogStyle.shape,
-          titlePadding: widget.dialogStyle.titlePadding ??
-              const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
-          titleTextStyle: widget.dialogStyle.titleTextStyle),
+        backgroundColor: widget.dialogStyle.backgroundColor,
+        titleDivider: widget.dialogStyle.titleDivider,
+        borderRadius:
+            widget.dialogStyle.borderRadius ?? BorderRadius.circular(2.0),
+        contentPadding:
+            msgPadding as EdgeInsets? ??
+            const EdgeInsets.symmetric(horizontal: 20.0),
+        contentTextStyle: widget.dialogStyle.contentTextStyle,
+        elevation: widget.dialogStyle.elevation,
+        semanticsLabel: widget.dialogStyle.semanticsLabel,
+        // animatePopup: widget.dialogStyle.animatePopup ?? true,
+        shape: widget.dialogStyle.shape,
+        titlePadding:
+            widget.dialogStyle.titlePadding ??
+            const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 0.0),
+        titleTextStyle: widget.dialogStyle.titleTextStyle,
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -318,12 +329,11 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               loading,
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Expanded(
                 child: DefaultTextStyle(
-                  style: widget.dialogStyle.contentTextStyle ??
+                  style:
+                      widget.dialogStyle.contentTextStyle ??
                       dialogTheme.contentTextStyle ??
                       theme.textTheme.titleMedium!,
                   child: Semantics(child: message),
@@ -341,9 +351,7 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   style: ButtonStyle(
-                    padding: WidgetStatePropertyAll(
-                      const EdgeInsets.only(),
-                    ),
+                    padding: WidgetStatePropertyAll(const EdgeInsets.only()),
                     overlayColor: WidgetStatePropertyAll(
                       Colors.white.withValues(alpha: .3),
                     ),
@@ -354,11 +362,25 @@ class _ProgressDialogWidgetState extends State<_ProgressDialogWidget>
                   },
                   child: DefaultTextStyle(
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary),
-                    child: widget.cancelText ?? const Text('Cancel'),
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    child:
+                        widget.cancelText ??
+                        Text(
+                          Localizations.of<MaterialLocalizations>(
+                                context,
+                                MaterialLocalizations,
+                              )?.cancelButtonLabel ??
+                              Localizations.of<CupertinoLocalizations>(
+                                context,
+                                CupertinoLocalizations,
+                              )?.cancelButtonLabel ??
+                              const DefaultMaterialLocalizations()
+                                  .cancelButtonLabel,
+                        ),
                   ),
                 ),
-              )
+              ),
             ],
     );
   }
@@ -510,14 +532,18 @@ class CustomProgressDialog implements _CustomProgressDialog {
 
     dynamic output;
     try {
-      await future.then((data) {
-        if (onProgressFinish != null) {
-          onProgressFinish = onProgressFinish!(data);
-        }
-        output = data;
-      }).catchError((error) {
-        if (onProgressError != null) onProgressError = onProgressError!(error);
-      });
+      await future
+          .then((data) {
+            if (onProgressFinish != null) {
+              onProgressFinish = onProgressFinish!(data);
+            }
+            output = data;
+          })
+          .catchError((error) {
+            if (onProgressError != null) {
+              onProgressError = onProgressError!(error);
+            }
+          });
     } catch (e) {
       pDialog.dismiss();
       rethrow;
@@ -566,9 +592,11 @@ class _CustomProgressDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor = _backgroundColor ??
+    Color backgroundColor =
+        _backgroundColor ??
         (widget.backgroundColor ?? Colors.black.withValues(alpha: .5));
-    Widget loadingWidget = (_loadingWidget ?? widget.loadingWidget) ??
+    Widget loadingWidget =
+        (_loadingWidget ?? widget.loadingWidget) ??
         Container(
           padding: const EdgeInsets.all(10.0),
           height: 100.0,
@@ -587,11 +615,10 @@ class _CustomProgressDialogWidgetState
       onDismiss: widget.onDismiss,
       barrierColor: backgroundColor,
       dialog: Padding(
-        padding: MediaQuery.of(context).viewInsets +
+        padding:
+            MediaQuery.of(context).viewInsets +
             const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
-        child: Center(
-          child: loadingWidget,
-        ),
+        child: Center(child: loadingWidget),
       ),
     );
   }
